@@ -62,45 +62,45 @@ Once you have the coocaFish object, you can make API calls using the format desc
 On success you get back the meta data and the response text. Below is an example of both
 
 #### Response Text
-`{
-    "response": {
-        "users": [
-            {
-                "id": "4ee25dcb356f4e6eac000060",
-                "username": "aaron-b1fbd26c-89b1-49e3-b4c4-f319493324db",
-                "custom_fields": {
-                    "coordinates": [
-                        [
-                            -122.1,
-                            37.1
+    {
+        "response": {
+            "users": [
+                {
+                    "id": "4ee25dcb356f4e6eac000060",
+                    "username": "aaron-b1fbd26c-89b1-49e3-b4c4-f319493324db",
+                    "custom_fields": {
+                        "coordinates": [
+                            [
+                                -122.1,
+                                37.1
+                            ]
                         ]
-                    ]
-                },
-                "updated_at": "2011-12-28T04:35:50+0000",
-                "last_name": "Saunders_1",
-                "created_at": "2011-12-09T19:13:15+0000",
-                "role": "",
-                "email": "aaron@clearlyinnovative.com",
-                "stats": {
-                    "storage": {
-                        "used": 20896579
                     },
-                    "photos": {
-                        "total_count": 55
-                    }
-                },
-                "first_name": "Aaron",
-                "external_accounts": []
-            }
-        ]
-    },
-    "meta": {
-        "method_name": "loginUser",
-        "code": 200,
-        "status": "ok",
-        "session_id": "eoXK243J4NRVB97H-Sa23HOSAeU"
+                    "updated_at": "2011-12-28T04:35:50+0000",
+                    "last_name": "Saunders_1",
+                    "created_at": "2011-12-09T19:13:15+0000",
+                    "role": "",
+                    "email": "aaron@clearlyinnovative.com",
+                    "stats": {
+                        "storage": {
+                            "used": 20896579
+                        },
+                        "photos": {
+                            "total_count": 55
+                        }
+                    },
+                    "first_name": "Aaron",
+                    "external_accounts": []
+                }
+            ]
+        },
+        "meta": {
+            "method_name": "loginUser",
+            "code": 200,
+            "status": "ok",
+            "session_id": "eoXK243J4NRVB97H-Sa23HOSAeU"
+        }
     }
-}`
 
 
 #### Meta Data Text
