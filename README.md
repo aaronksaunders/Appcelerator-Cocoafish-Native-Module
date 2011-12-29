@@ -113,4 +113,26 @@ On success you get back the meta data and the response text. Below is an example
         }
     }
     
+## Uploading a Photo
+
+A photo can be uploaded by passing in a blob or by passing a file object. The API will handle processing the data appropriately before making the API call.
+
+Your code should look something like this to upload the file.
+
+    cocoaFish.apiCall({
+        "baseUrl" : "photos/create.json",
+        "httpMethod" : "POST",
+        "params" : {
+            "photo" : Ti.Filesystem.getFile("certificate.png"),
+            "tags" : "aaron, nativeIOS, fileObject"
+        },
+        "success" : function(d) {
+            Ti.API.info("uploadPhoto: responseText is => " + d.responseText);
+            Ti.API.info("uploadPhoto: metaDataText is => " + d.metaDataText);
+        },
+        "error" : function(d) {
+            Ti.API.error("uploadPhoto: error is => " + d.errorText);
+        }
+    });
+
 # [DOWNLOAD THE MODULE HERE](http://bit.ly/sYodsP)
