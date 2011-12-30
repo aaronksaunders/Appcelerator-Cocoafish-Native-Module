@@ -1,6 +1,6 @@
 ![alt text](http://clearlyinnovative.com/images/logo_transparent.png "Title")
 
-# Cocoa Fish Native iOS Module
+# Cocoa Fish Native iOS & Android Module
 
 ---
 
