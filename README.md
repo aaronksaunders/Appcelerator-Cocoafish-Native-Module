@@ -33,10 +33,20 @@
 Pass in your keys to create the object, you should get your keys from the 
 [CocoaFish website](www.cocoafish.com) after you signup and login
 
-    var cocoaFish = cocoafishMgr.create({
-	    "consumer_key" : "dIUKXXXXXXXXXXXXXXXXXXXXXXXBb4",
-	    "secret_key" : "kN0lemXXXXXXXXXXXXXXXXXXXXXXXPva"
-    });
+    var cocoaFish, options;
+    
+    options = {
+        "consumer_key" : "dIUKXXXXXXXXXXXXXXXXXXXXXXXBb4",
+        "secret_key" : "kN0lemXXXXXXXXXXXXXXXXXXXXXXXPva"    
+    };
+    
+    if(Ti.Platform.name == "android") {
+        cocoaFish = cocoafishMgr.createCocoaFishMgr(options);
+    } else {
+        cocoaFish = cocoafishMgr.create(options);
+    }
+    
+
 
 
 Once you have the coocaFish object, you can make API calls using the format described below and in the sample code. Please remember as stated above, **this is a first revision of the code** and it is not perfect.
