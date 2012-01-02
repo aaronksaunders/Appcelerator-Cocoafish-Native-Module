@@ -37,7 +37,8 @@ Pass in your keys to create the object, you should get your keys from the
     
     options = {
         "consumer_key" : "dIUKXXXXXXXXXXXXXXXXXXXXXXXBb4",
-        "secret_key" : "kN0lemXXXXXXXXXXXXXXXXXXXXXXXPva"    
+        "secret_key" : "kN0lemXXXXXXXXXXXXXXXXXXXXXXXPva",
+        "facebookAppId" : "YOUR FACEBOOK APP ID"
     };
     
     if(Ti.Platform.name == "android") {
@@ -145,4 +146,97 @@ Your code should look something like this to upload the file.
         }
     });
 
+
+## Creating An Account with  Facebook
+
+The external account login will create a Cocoafish account if it hasn't been created, otherwise, it will login using the user who has the matching external account info.
+
+Here is where you call the cocoafish API; but as you can see it has the standard Appcelerator Facebook login code.
+This is how you get the user's Facebook Access Token which is required to login with the account
+
+We also have the actual function that call CocoaFish API to link the two accounts, that code in wrapped in the function `loginWithFacebook`
+
+    Titanium.Facebook.appid = options.facebookAppId;
+    Titanium.Facebook.permissions =  ['publish_stream'];
+    Titanium.Facebook.addEventListener('login', function(e) {
+        if(e.success) {
+            loginWithFacebook();
+        } else if(e.error) {
+            alert(e.error);
+        } else if(e.cancelled) {
+            alert("Cancelled");
+        }
+    });
+
+    if ( Titanium.Facebook.loggedIn === false ) {
+        Titanium.Facebook.authorize();
+    } else {
+        loginWithFacebook();
+    }
+
+If it worked, you should see this when you look at the users account information in the console
+
+    "external_accounts": [
+         {
+             "external_type": "facebook",
+             "external_id": "10000xxxxxxxxxx",
+             "token": "AAAxxxx9AnMkEBADsxxxxxxxxxxxxxxxxxDJAW73beQTXb6jIf8xxxxxIgZDZD"
+         }
+    ]
+
+Inside of `loginWithFacebook`, we use the facebook uid to log in and/or create an account in CocoaFish.
+
+    function loginWithFacebook() {
+        var data = {
+            type : "facebook",
+            token : Titanium.Facebook.accessToken
+        };
+
+        cocoaFish.apiCall({
+            "baseUrl" : "users/external_account_login.json",
+            "httpMethod" : "POST",
+            "params" :data,
+            success : function(d) {
+                Ti.API.info("responseText is => " + d.responseText);
+                Ti.API.info("metaDataText is => " + d.metaDataText);
+                var user = (JSON.parse(d.responseText)).response.users[0];
+            },
+            error : function(d) {
+                Ti.API.error("error is => " + d.errorText);
+            }
+        });
+    }
+
+
+### Unlinking Account From Facebook
+
+Unlinking the account from facebook is pretty straight forward. Just use the Facebook UID from the user and make the API call.
+
+    function unlinkWithFacebook() {
+
+        cocoaFish.apiCall({
+            "baseUrl" : "users/external_account_unlink.json",
+            "httpMethod" : "DELETE",
+            "params" :{ 
+                "type" : "facebook",
+                "id" : Titanium.Facebook.uid,
+            },
+            success : function(d) {
+                Ti.API.info("responseText is => " + d.responseText);
+                Ti.API.info("metaDataText is => " + d.metaDataText);
+            },
+            error : function(d) {
+                Ti.API.error("error is => " + d.errorText);
+            }
+        });            
+
+    }
+    
+You might need to either login or ensure you have the `Titanium.Facebook.uid` or you could have saved it from the user's account.
+
+All the external account information is accessible from the CocoaFish user object, see listing of external accounts above.
+
+
+
+    
 # [DOWNLOAD THE MODULE HERE](http://bit.ly/sYodsP)
