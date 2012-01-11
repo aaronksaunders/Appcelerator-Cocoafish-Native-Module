@@ -239,6 +239,7 @@ All the external account information is accessible from the CocoaFish user objec
 
 #### Creating an Account with Twitter
 
+It is important to note that whatever twitter client you use, you will need to get the access_token and the users twitter id in order to make the API call to cocoafish
 
     function initWithTwitter() {
 	var twitterFactory = require('twitter');
