@@ -240,7 +240,7 @@ All the external account information is accessible from the CocoaFish user objec
 #### Creating an Account with Twitter
 
 
-function initWithTwitter() {
+    function initWithTwitter() {
 	var twitterFactory = require('twitter');
 	var tt = new twitterFactory.twitter({
 		service : 'twitter',
@@ -295,7 +295,7 @@ function initWithTwitter() {
 	// will be created for you. In the future you can login with the same twitter
 	// credentials
 	tt.authorize(authorizationSuccess);
-}
+    }
 
     
 # [DOWNLOAD THE MODULE HERE](http://bit.ly/sYodsP)
