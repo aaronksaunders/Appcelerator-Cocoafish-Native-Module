@@ -237,6 +237,65 @@ You might need to either login or ensure you have the `Titanium.Facebook.uid` or
 All the external account information is accessible from the CocoaFish user object, see listing of external accounts above.
 
 
+#### Creating an Account with Twitter
+
+
+function initWithTwitter() {
+	var twitterFactory = require('twitter');
+	var tt = new twitterFactory.twitter({
+		service : 'twitter',
+		consumer_key : "your_twitter_consumer_key",
+		consumer_secret : "your_twitter_consumer_secret"
+	});
+
+	//
+	// since we were successful, we can get the parameters needed to
+	// make the cocoafish api call to login/create external account.
+	//
+	// these configuration values are available from a customized
+	// version of the birdhouse.js twitter module
+	//
+	var authorizationSuccess = function() {
+		var config, param_data;
+		config = tt.getConfig();
+		Ti.API.info("access_token is => " + config.access_token);
+		Ti.API.info("user_id is => " + config.user_id);
+		Ti.API.info("screen_name is => " + config.screen_name);
+
+		//
+		// pass the params in following the cocoafish documentation
+		var data = {
+			type : "twitter",
+			token : config.access_token,
+			id : config.user_id
+		};
+
+		//
+		// make the API call and you are done.
+		//
+		// if the account exists already, then the user will be
+		// logged in
+		cocoaFish.apiCall({
+			"baseUrl" : "users/external_account_login.json",
+			"httpMethod" : "POST",
+			"params" : data,
+			success : function(d) {
+				Ti.API.info("responseText is => " + d.responseText);
+				Ti.API.info("metaDataText is => " + d.metaDataText);
+				var user = (JSON.parse(d.responseText)).response.users[0];
+				Ti.API.info("user is => " + user);
+			},
+			error : function(d) {
+				Ti.API.error("error is => " + d.errorText);
+			}
+		})
+	}
+	//
+	// call to authorize with twitter account information. On success an account
+	// will be created for you. In the future you can login with the same twitter
+	// credentials
+	tt.authorize(authorizationSuccess);
+}
 
     
 # [DOWNLOAD THE MODULE HERE](http://bit.ly/sYodsP)
